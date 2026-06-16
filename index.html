@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrbitSpace // 3D Keplerian Engine</title>
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://unpkg.com/three"></script>
+    <script src="https://unpkg.com/globe.gl"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="3d-globe"></div>
+
+    <div class="hud-overlay">
+        
+        <div class="brand-badge-container">
+            <i class="ph-bold ph-planet"></i>
+            <div class="brand-text">
+                <h1>OrbitSpace</h1>
+                <a href="https://www.linkedin.com/in/yagiz-karagoz-b18820358" target="_blank">
+                    <i class="ph-bold ph-linkedin-logo"></i>YAGIZ KARAGOZ
+                </a>
+            </div>
+        </div>
+
+        <aside class="hud-sidebar-left">
+            <div class="panel-header">
+                <span><i class="ph ph-cpu"></i> SYSTEMS OVERVIEW</span>
+            </div>
+            <div class="metric-group">
+                <div class="hud-metric">
+                    <span class="label">ORBITAL DISK STATUS</span>
+                    <span class="value telemetry-emerald">STABLE</span>
+                </div>
+                <div class="hud-metric">
+                    <span class="label">VECTOR COUNT</span>
+                    <span class="value">60 FLUID RINGS</span>
+                </div>
+                <div class="hud-metric">
+                    <span class="label">CORE VELOCITY</span>
+                    <span class="value telemetry-amber">KEPLERIAN DATA</span>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h4 class="chart-title">Threat Level Index</h4>
+                <canvas id="analytics-chart"></canvas>
+            </div>
+        </aside>
+
+        <div class="hud-terminal-panel">
+            <div class="terminal-header">
+                <span><i class="ph-bold ph-terminal-window"></i> SYSTEM LIVE LOGS</span>
+                <span class="terminal-blink">● STREAMING</span>
+            </div>
+            <div id="terminal-log-stream" class="terminal-body"></div>
+        </div>
+
+        <aside class="hud-sidebar-right">
+            <div class="panel-header">
+                <span><i class="ph ph-activity"></i> TELEMETRY INGESTION</span>
+            </div>
+            
+            <div class="tech-panel-content">
+                
+                <div class="tech-section">
+                    <span class="tech-title">// INGESTION PIPELINE</span>
+                    <div class="tech-row"><span>API SOURCE</span><span class="text-white">NASA-NeoWs</span></div>
+                    <div class="tech-row"><span>STREAM DATA</span><span class="telemetry-emerald">CONNECTIVITY OK</span></div>
+                    <div class="tech-row"><span>BUFFER STATE</span><span class="text-white">0ms DELAY</span></div>
+                </div>
+
+                <div class="tech-section">
+                    <span class="tech-title">// CORE PHYSICS RENDERER</span>
+                    <div class="tech-row"><span>ENGINE MODE</span><span class="text-white">WEBGL 3D</span></div>
+                    <div class="tech-row"><span>PHYSICS LOOP</span><span class="text-white">60 FPS FIXED</span></div>
+                    <div class="tech-row"><span>GEOMETRY ALPHA</span><span class="telemetry-amber">ACCELERATED</span></div>
+                </div>
+
+                <div class="tech-section">
+                    <span class="tech-title">// PLANETARY DEFENSE FILTER</span>
+                    <div class="tech-row"><span>PHA DETECTION</span><span class="text-white">AUTOMATED</span></div>
+                    <div class="tech-row"><span>THREAT INDEX</span><span class="telemetry-rose">ACTIVE OVERLAY</span></div>
+                </div>
+
+                <div class="tech-footer">
+                    >> STATUS: REGISTRY OPTIMAL<br>
+                    >> SECURE NATIVE CREDENTIALS ACTIVE
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div id="asteroid-modal" class="hud-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="ph-bold ph-warning-circle"></i> TELEMETRY ANOMALY DETECTED</h3>
+                <button id="close-modal-btn" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-row">
+                    <span class="m-label">DESIGNATION:</span>
+                    <span id="m-name" class="m-value text-white">---</span>
+                </div>
+                <div class="modal-row">
+                    <span class="m-label">EST. DIAMETER:</span>
+                    <span id="m-diameter" class="m-value">---</span>
+                </div>
+                <div class="modal-row">
+                    <span class="m-label">MISS DISTANCE:</span>
+                    <span id="m-distance" class="m-value">---</span>
+                </div>
+                <div class="modal-row">
+                    <span class="m-label">THREAT LEVEL:</span>
+                    <span id="m-status" class="m-value">---</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

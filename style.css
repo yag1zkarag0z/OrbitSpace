@@ -1,0 +1,178 @@
+/* ==========================================================================
+   ORBITSPACE // PRODUCTION HUD ECOSYSTEM (GRID SPLIT & SEPARATED TERMINAL)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&display=swap');
+
+:root {
+    --hud-bg: rgba(5, 5, 8, 0.65);         
+    --hud-border: rgba(255, 255, 255, 0.05); 
+    --hud-border-focus: rgba(255, 255, 255, 0.2);
+    --text-neon: #ededed;
+    --text-dim: #71717a;
+    --telemetry-emerald: #10b981;
+    --telemetry-amber: #f59e0b;
+    --telemetry-rose: #f43f5e;
+}
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: 'Geist Mono', monospace; 
+    -webkit-font-smoothing: antialiased;
+}
+
+body, html { 
+    width: 100%; 
+    height: 100%; 
+    overflow: hidden; 
+    background-color: #000; 
+    color: var(--text-neon); 
+}
+
+#3d-globe { 
+    position: absolute; 
+    top: 0; left: 0; width: 100%; height: 100%; 
+    z-index: 1; 
+}
+
+/* 🎛️ HUD MASTER GRID LAYOUT */
+.hud-overlay {
+    position: absolute; 
+    top: 0; left: 0; width: 100%; height: 100%; 
+    z-index: 10; 
+    pointer-events: none; 
+    padding: 1.5rem;
+    display: grid; 
+    grid-template-columns: 300px 1fr 340px; 
+    grid-template-rows: 1fr; 
+    gap: 1.5rem;
+}
+
+.hud-sidebar-left, .hud-sidebar-right { 
+    pointer-events: auto; 
+    background: var(--hud-bg); 
+    border: 1px solid var(--hud-border); 
+    border-radius: 6px; 
+    backdrop-filter: blur(12px); 
+    padding: 1.25rem; 
+}
+
+/* 🪐 BRAND BADGE CONTAINER */
+.brand-badge-container {
+    position: fixed;
+    top: 20px; left: 20px;
+    padding: 12px 18px;
+    background: rgba(5, 5, 10, 0.85);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 6px;
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 999;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+    pointer-events: auto;
+}
+
+.brand-badge-container .ph-planet { font-size: 1.6rem; color: #3b82f6; }
+.brand-text h1 { font-size: 1rem; font-weight: 700; color: #fff; margin: 0; line-height: 1.1; }
+.brand-text a {
+    color: #10b981; font-size: 0.65rem; text-decoration: none; opacity: 0.85;
+    display: flex; align-items: center; gap: 4px; margin-top: 4px; transition: all 0.2s;
+}
+.brand-text a:hover { opacity: 1; color: #34d399; transform: translateX(2px); }
+
+/* SIDEBAR HIZALAMALARI */
+.hud-sidebar-left { 
+    grid-column: 1; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 1.25rem; 
+    height: fit-content; 
+    margin-top: 85px; 
+}
+
+.hud-sidebar-right { 
+    grid-column: 3; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 1.25rem; 
+    height: fit-content; /* 🎯 KİLİT NOKTA: Panel artık boydan boya uzamayacak, sadece text'ler kadar yer kaplayacak */
+    margin-top: 85px;    /* Sol panelle üst hizasını kusursuz eşitlemek için */
+}
+.panel-header { 
+    font-size: 0.7rem; color: var(--text-dim); 
+    border-bottom: 1px solid var(--hud-border); 
+    padding-bottom: 0.5rem; font-weight: 600; letter-spacing: 0.05em;
+}
+
+/* METRICS */
+.hud-metric { display: flex; flex-direction: column; gap: 0.2rem; }
+.hud-metric .label { font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.5px; }
+.hud-metric .value { font-size: 0.9rem; font-weight: 700; }
+.telemetry-emerald { color: var(--telemetry-emerald); }
+.telemetry-amber { color: var(--telemetry-amber); }
+.telemetry-rose { color: var(--telemetry-rose); }
+
+/* CHART COMPONENT */
+.chart-container {
+    position: relative; height: 160px; width: 100%; 
+    margin-top: 0.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.03);
+}
+.chart-title { color: #fff; font-size: 0.75rem; letter-spacing: 0.5px; margin-bottom: 0.5rem; text-transform: uppercase; }
+
+/* 📟 SEPARATED COMFORT TERMINAL (ORTA-ALT BAĞIMSIZ HALE GETİRİLDİ) */
+.hud-terminal-panel {
+    position: fixed;
+    bottom: 24px;
+    left: 340px; /* Sol panelin bitişinden başla */
+    right: 380px; /* Sağ panelin başlangıcında dur */
+    height: 160px;
+    background: rgba(5, 5, 10, 0.8);
+    border: 1px solid rgba(16, 185, 129, 0.2); 
+    border-radius: 6px;
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    pointer-events: auto;
+}
+
+.terminal-header {
+    background: rgba(16, 185, 129, 0.08); padding: 8px 14px;
+    border-bottom: 1px solid rgba(16, 185, 129, 0.15);
+    font-size: 0.65rem; color: #10b981; font-weight: bold;
+    display: flex; justify-content: space-between; letter-spacing: 1px; flex-shrink: 0;
+}
+.terminal-blink { animation: terminalPulse 1.5s infinite alternate; }
+.terminal-body { padding: 10px 14px; flex-grow: 1; overflow-y: scroll; overflow-x: hidden; display: block; }
+.terminal-body::-webkit-scrollbar { width: 4px; }
+.terminal-body::-webkit-scrollbar-thumb { background: rgba(16, 185, 129, 0.3); border-radius: 2px; }
+
+.log-line { font-family: 'Courier New', monospace; font-size: 0.68rem; line-height: 1.4; margin-bottom: 3px; display: block; width: 100%; }
+.log-info { color: #3b82f6; } .log-success { color: #10b981; } .log-warn { color: #f59e0b; } .log-crit { color: #f43f5e; }    
+
+/* 📡 TEKNİK SAĞ PANEL STİLLERİ */
+.tech-panel-content { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 0.5rem; }
+.tech-section { display: flex; flex-direction: column; gap: 0.4rem; }
+.tech-title { font-size: 0.65rem; color: var(--text-dim); font-weight: bold; letter-spacing: 0.5px; }
+.tech-row { display: flex; justify-content: space-between; font-size: 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.01); padding-bottom: 2px; }
+.tech-row span:first-child { color: #8e8e93; }
+.text-white { color: #fff; }
+.tech-footer { border-top: 1px solid rgba(255,255,255,0.04); padding-top: 0.75rem; font-family: 'Courier New', monospace; font-size: 0.65rem; color: #10b981; line-height: 1.4; }
+
+/* MODAL SYSTEM */
+.hud-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+.hud-modal.active { opacity: 1; pointer-events: auto; }
+.modal-content { background: rgba(10, 10, 15, 0.9); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; width: 380px; padding: 1.5rem; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.75rem; margin-bottom: 1rem; }
+.modal-header h3 { font-size: 0.75rem; color: var(--telemetry-amber); }
+.close-btn { background: transparent; border: none; color: var(--text-dim); font-size: 1.2rem; cursor: pointer; }
+.modal-row { display: flex; justify-content: space-between; padding: 0.5rem 0; font-size: 0.75rem; }
+.m-label { color: var(--text-dim); } .m-value { font-weight: 700; }
+
+@keyframes terminalPulse { from { opacity: 0.4; } to { opacity: 1; } }
