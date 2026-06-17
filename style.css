@@ -1,11 +1,11 @@
 /* ==========================================================================
-   ORBITSPACE // PRODUCTION HUD ECOSYSTEM (RESPONSIVE OPTIMIZED)
+   ORBITSPACE // PRODUCTION HUD ECOSYSTEM (FLEXBOX RESPONSIVE FIX)
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&display=swap');
 
 :root {
-    --hud-bg: rgba(5, 5, 8, 0.65);         
+    --hud-bg: rgba(5, 5, 8, 0.75);         
     --hud-border: rgba(255, 255, 255, 0.05); 
     --hud-border-focus: rgba(255, 255, 255, 0.2);
     --text-neon: #ededed;
@@ -37,18 +37,17 @@ body, html {
     z-index: 1; 
 }
 
-/* 🎛️ HUD MASTER GRID LAYOUT - RESPONSIVE DEĞİŞİKLİK */
+/* 🎛️ HUD OVERLAY CONTAINER (FLEXBOX GEÇİŞİ) */
 .hud-overlay {
     position: absolute; 
     top: 0; left: 0; width: 100%; height: 100%; 
     z-index: 10; 
     pointer-events: none; 
-    padding: 1rem;
-    display: grid; 
-    /* Ekran küçüldükçe panellerin esnemesi için minmax ve fr kullandık */
-    grid-template-columns: minmax(260px, 300px) 1fr minmax(280px, 340px); 
-    grid-template-rows: 1fr; 
-    gap: 1rem;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between; /* Sağ ve solu iki uca yasla, üst üste binme İMKANSIZ */
+    align-items: flex-start;
+    gap: 1.5rem;
 }
 
 .hud-sidebar-left, .hud-sidebar-right { 
@@ -58,13 +57,14 @@ body, html {
     border-radius: 6px; 
     backdrop-filter: blur(12px); 
     padding: 1.25rem; 
+    box-shadow: 0 20px 50px rgba(0,0,0,0.8);
 }
 
 /* 🪐 BRAND BADGE CONTAINER */
 .brand-badge-container {
     position: fixed;
-    top: 15px; left: 15px;
-    padding: 10px 14px;
+    top: 20px; left: 20px;
+    padding: 12px 18px;
     background: rgba(5, 5, 10, 0.85);
     border: 1px solid rgba(59, 130, 246, 0.2);
     border-radius: 6px;
@@ -77,31 +77,31 @@ body, html {
     pointer-events: auto;
 }
 
-.brand-badge-container .ph-planet { font-size: 1.4rem; color: #3b82f6; }
-.brand-text h1 { font-size: 0.9rem; font-weight: 700; color: #fff; margin: 0; line-height: 1.1; }
+.brand-badge-container .ph-planet { font-size: 1.6rem; color: #3b82f6; }
+.brand-text h1 { font-size: 1rem; font-weight: 700; color: #fff; margin: 0; line-height: 1.1; }
 .brand-text a {
     color: #10b981; font-size: 0.65rem; text-decoration: none; opacity: 0.85;
     display: flex; align-items: center; gap: 4px; margin-top: 4px; transition: all 0.2s;
 }
 .brand-text a:hover { opacity: 1; color: #34d399; transform: translateX(2px); }
 
-/* SIDEBAR HIZALAMALARI */
+/* SIDEBAR GENİŞLİKLERİ VE HIZALAMALARI */
 .hud-sidebar-left { 
-    grid-column: 1; 
+    width: 300px;
+    min-width: 280px;
     display: flex; 
     flex-direction: column; 
     gap: 1.25rem; 
-    height: fit-content; 
-    margin-top: 75px; 
+    margin-top: 85px; 
 }
 
 .hud-sidebar-right { 
-    grid-column: 3; 
+    width: 340px;
+    min-width: 300px;
     display: flex; 
     flex-direction: column; 
     gap: 1.25rem; 
-    height: fit-content; 
-    margin-top: 75px;    
+    margin-top: 85px;    
 }
 
 .panel-header { 
@@ -120,22 +120,20 @@ body, html {
 
 /* CHART COMPONENT */
 .chart-container {
-    position: relative; height: 140px; width: 100%; 
+    position: relative; height: 160px; width: 100%; 
     margin-top: 0.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.03);
 }
 .chart-title { color: #fff; font-size: 0.75rem; letter-spacing: 0.5px; margin-bottom: 0.5rem; text-transform: uppercase; }
 
-/* 📟 SEPARATED COMFORT TERMINAL (DİNAMİK GENİŞLİK VERİLDİ) */
+/* 📟 SEPARATED COMFORT TERMINAL (GÜVENLİ AB-SOLUTE POZİSYON) */
 .hud-terminal-panel {
     position: fixed;
-    bottom: 20px;
-    /* Sabit pixel yerine yüzdesel ve dinamik calc kullanarak çakışmayı engelledik */
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 700px); 
-    min-width: 320px;
-    height: 140px;
-    background: rgba(5, 5, 10, 0.8);
+    bottom: 24px;
+    /* Panellerin genişliğini çıkartıp tam ortalayan güvenli formül */
+    left: 360px; 
+    right: 400px;
+    height: 160px;
+    background: rgba(5, 5, 10, 0.85);
     border: 1px solid rgba(16, 185, 129, 0.2); 
     border-radius: 6px;
     backdrop-filter: blur(10px);
@@ -173,7 +171,7 @@ body, html {
 /* MODAL SYSTEM */
 .hud-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
 .hud-modal.active { opacity: 1; pointer-events: auto; }
-.modal-content { background: rgba(10, 10, 15, 0.9); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; width: 90%; max-width: 380px; padding: 1.5rem; }
+.modal-content { background: rgba(10, 10, 15, 0.9); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; width: 380px; padding: 1.5rem; }
 .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.75rem; margin-bottom: 1rem; }
 .modal-header h3 { font-size: 0.75rem; color: var(--telemetry-amber); }
 .close-btn { background: transparent; border: none; color: var(--text-dim); font-size: 1.2rem; cursor: pointer; }
@@ -183,59 +181,52 @@ body, html {
 @keyframes terminalPulse { from { opacity: 0.4; } to { opacity: 1; } }
 
 /* ==========================================================================
-   📱 MEDIA QUERIES // RESPONSIVE ADAPTATION LAYER
+   📱 RESPONSIVE MEDIA QUERIES (BREAKPOINTS)
    ========================================================================== */
 
-/* 💻 LAPTOP & MEDIUM SCREENS (Panellerin alt alta girmesini önlemek için terminali daraltıyoruz) */
-@media (max-width: 1200px) {
-    .hud-terminal-panel {
-        width: calc(100% - 620px);
-    }
+/* 💻 KÜÇÜK LAPTOPLAR (Paneller daralır, terminal alt sınırına çekilir) */
+@media (max-width: 1280px) {
+    .hud-sidebar-left { width: 260px; }
+    .hud-sidebar-right { width: 280px; }
+    .hud-terminal-panel { left: 290px; right: 310px; }
 }
 
-/* 📑 TABLETS (Panelleri tek bir sütuna çekiyoruz, terminali alta yapıştırıyoruz) */
-@media (max-width: 992px) {
-    .hud-overlay {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        overflow-y: auto;
-        pointer-events: auto; /* Scroll çalışabilmesi için */
-        padding-bottom: 180px; /* Terminalin arkasında kalmasınlar diye boşluk */
-    }
+/* 📑 TABLETLER (Paneller yan yana sığmayınca dikey akış başlar, çakışma biter) */
+@media (max-width: 1024px) {
+    body, html { overflow-y: auto; } /* Sayfa scroll edilebilir olur */
     
+    .hud-overlay {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        height: auto;
+        padding-bottom: 200px; /* Terminal payı */
+    }
+
     .hud-sidebar-left, .hud-sidebar-right {
-        grid-column: 1 !important;
+        width: 100%;
         margin-top: 0;
     }
-    
-    .hud-sidebar-left {
-        margin-top: 70px; /* Brand badge kurtarması için */
-    }
-    
+
+    .hud-sidebar-left { margin-top: 85px; } /* Brand kurtarma */
+
     .hud-terminal-panel {
-        width: calc(100% - 2rem);
-        left: 1rem;
-        right: 1rem;
-        transform: none;
-        bottom: 1rem;
+        position: fixed;
+        left: 1.5rem;
+        right: 1.5rem;
+        width: auto;
+        bottom: 1.5rem;
     }
 }
 
-/* 📱 SMARTPHONES (Küçük ekranlarda arayüzü sadeleştirip okunabilir kılıyoruz) */
+/* 📱 SMARTPHONE */
 @media (max-width: 576px) {
     .brand-badge-container {
-        width: calc(100% - 2rem);
+        position: relative;
+        top: 0; left: 0;
+        width: 100%;
+        margin-bottom: 1rem;
     }
-    
-    .hud-sidebar-left, .hud-sidebar-right {
-        padding: 0.85rem;
-    }
-    
-    .chart-container {
-        height: 120px;
-    }
-    
-    .hud-terminal-panel {
-        height: 120px;
-    }
+    .hud-sidebar-left { margin-top: 0; }
+    .hud-terminal-panel { height: 130px; bottom: 0.5rem; left: 0.5rem; right: 0.5rem; }
 }
