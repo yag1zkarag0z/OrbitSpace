@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ORBITSPACE // PRODUCTION HUD ECOSYSTEM (GRID SPLIT & SEPARATED TERMINAL)
+   ORBITSPACE // PRODUCTION HUD ECOSYSTEM (RESPONSIVE OPTIMIZED)
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&display=swap');
@@ -27,7 +27,7 @@ body, html {
     width: 100%; 
     height: 100%; 
     overflow: hidden; 
-    background-color: #000; 
+    background-color: #000;
     color: var(--text-neon); 
 }
 
@@ -37,17 +37,18 @@ body, html {
     z-index: 1; 
 }
 
-/* 🎛️ HUD MASTER GRID LAYOUT */
+/* 🎛️ HUD MASTER GRID LAYOUT - RESPONSIVE DEĞİŞİKLİK */
 .hud-overlay {
     position: absolute; 
     top: 0; left: 0; width: 100%; height: 100%; 
     z-index: 10; 
     pointer-events: none; 
-    padding: 1.5rem;
+    padding: 1rem;
     display: grid; 
-    grid-template-columns: 300px 1fr 340px; 
+    /* Ekran küçüldükçe panellerin esnemesi için minmax ve fr kullandık */
+    grid-template-columns: minmax(260px, 300px) 1fr minmax(280px, 340px); 
     grid-template-rows: 1fr; 
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .hud-sidebar-left, .hud-sidebar-right { 
@@ -62,8 +63,8 @@ body, html {
 /* 🪐 BRAND BADGE CONTAINER */
 .brand-badge-container {
     position: fixed;
-    top: 20px; left: 20px;
-    padding: 12px 18px;
+    top: 15px; left: 15px;
+    padding: 10px 14px;
     background: rgba(5, 5, 10, 0.85);
     border: 1px solid rgba(59, 130, 246, 0.2);
     border-radius: 6px;
@@ -76,8 +77,8 @@ body, html {
     pointer-events: auto;
 }
 
-.brand-badge-container .ph-planet { font-size: 1.6rem; color: #3b82f6; }
-.brand-text h1 { font-size: 1rem; font-weight: 700; color: #fff; margin: 0; line-height: 1.1; }
+.brand-badge-container .ph-planet { font-size: 1.4rem; color: #3b82f6; }
+.brand-text h1 { font-size: 0.9rem; font-weight: 700; color: #fff; margin: 0; line-height: 1.1; }
 .brand-text a {
     color: #10b981; font-size: 0.65rem; text-decoration: none; opacity: 0.85;
     display: flex; align-items: center; gap: 4px; margin-top: 4px; transition: all 0.2s;
@@ -91,7 +92,7 @@ body, html {
     flex-direction: column; 
     gap: 1.25rem; 
     height: fit-content; 
-    margin-top: 85px; 
+    margin-top: 75px; 
 }
 
 .hud-sidebar-right { 
@@ -99,9 +100,10 @@ body, html {
     display: flex; 
     flex-direction: column; 
     gap: 1.25rem; 
-    height: fit-content; /* 🎯 KİLİT NOKTA: Panel artık boydan boya uzamayacak, sadece text'ler kadar yer kaplayacak */
-    margin-top: 85px;    /* Sol panelle üst hizasını kusursuz eşitlemek için */
+    height: fit-content; 
+    margin-top: 75px;    
 }
+
 .panel-header { 
     font-size: 0.7rem; color: var(--text-dim); 
     border-bottom: 1px solid var(--hud-border); 
@@ -118,18 +120,21 @@ body, html {
 
 /* CHART COMPONENT */
 .chart-container {
-    position: relative; height: 160px; width: 100%; 
+    position: relative; height: 140px; width: 100%; 
     margin-top: 0.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.03);
 }
 .chart-title { color: #fff; font-size: 0.75rem; letter-spacing: 0.5px; margin-bottom: 0.5rem; text-transform: uppercase; }
 
-/* 📟 SEPARATED COMFORT TERMINAL (ORTA-ALT BAĞIMSIZ HALE GETİRİLDİ) */
+/* 📟 SEPARATED COMFORT TERMINAL (DİNAMİK GENİŞLİK VERİLDİ) */
 .hud-terminal-panel {
     position: fixed;
-    bottom: 24px;
-    left: 340px; /* Sol panelin bitişinden başla */
-    right: 380px; /* Sağ panelin başlangıcında dur */
-    height: 160px;
+    bottom: 20px;
+    /* Sabit pixel yerine yüzdesel ve dinamik calc kullanarak çakışmayı engelledik */
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 700px); 
+    min-width: 320px;
+    height: 140px;
     background: rgba(5, 5, 10, 0.8);
     border: 1px solid rgba(16, 185, 129, 0.2); 
     border-radius: 6px;
@@ -168,7 +173,7 @@ body, html {
 /* MODAL SYSTEM */
 .hud-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
 .hud-modal.active { opacity: 1; pointer-events: auto; }
-.modal-content { background: rgba(10, 10, 15, 0.9); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; width: 380px; padding: 1.5rem; }
+.modal-content { background: rgba(10, 10, 15, 0.9); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; width: 90%; max-width: 380px; padding: 1.5rem; }
 .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.75rem; margin-bottom: 1rem; }
 .modal-header h3 { font-size: 0.75rem; color: var(--telemetry-amber); }
 .close-btn { background: transparent; border: none; color: var(--text-dim); font-size: 1.2rem; cursor: pointer; }
@@ -176,3 +181,61 @@ body, html {
 .m-label { color: var(--text-dim); } .m-value { font-weight: 700; }
 
 @keyframes terminalPulse { from { opacity: 0.4; } to { opacity: 1; } }
+
+/* ==========================================================================
+   📱 MEDIA QUERIES // RESPONSIVE ADAPTATION LAYER
+   ========================================================================== */
+
+/* 💻 LAPTOP & MEDIUM SCREENS (Panellerin alt alta girmesini önlemek için terminali daraltıyoruz) */
+@media (max-width: 1200px) {
+    .hud-terminal-panel {
+        width: calc(100% - 620px);
+    }
+}
+
+/* 📑 TABLETS (Panelleri tek bir sütuna çekiyoruz, terminali alta yapıştırıyoruz) */
+@media (max-width: 992px) {
+    .hud-overlay {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        overflow-y: auto;
+        pointer-events: auto; /* Scroll çalışabilmesi için */
+        padding-bottom: 180px; /* Terminalin arkasında kalmasınlar diye boşluk */
+    }
+    
+    .hud-sidebar-left, .hud-sidebar-right {
+        grid-column: 1 !important;
+        margin-top: 0;
+    }
+    
+    .hud-sidebar-left {
+        margin-top: 70px; /* Brand badge kurtarması için */
+    }
+    
+    .hud-terminal-panel {
+        width: calc(100% - 2rem);
+        left: 1rem;
+        right: 1rem;
+        transform: none;
+        bottom: 1rem;
+    }
+}
+
+/* 📱 SMARTPHONES (Küçük ekranlarda arayüzü sadeleştirip okunabilir kılıyoruz) */
+@media (max-width: 576px) {
+    .brand-badge-container {
+        width: calc(100% - 2rem);
+    }
+    
+    .hud-sidebar-left, .hud-sidebar-right {
+        padding: 0.85rem;
+    }
+    
+    .chart-container {
+        height: 120px;
+    }
+    
+    .hud-terminal-panel {
+        height: 120px;
+    }
+}
